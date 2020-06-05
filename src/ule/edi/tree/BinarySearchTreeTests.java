@@ -1,8 +1,10 @@
 package ule.edi.tree;
 
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -106,8 +108,51 @@ public class BinarySearchTreeTests {
 		Assert.assertEquals("{10, {5, {2 [(onlySon, 1)], ∅, ∅}, ∅}, {20, {15 [(onlySon, 3)], {12 [(onlySon, 2)], ∅, ∅}, ∅}, ∅}}",other.toString());
 
 		}
+		
+		@Test (expected = NoSuchElementException.class)
+		public void testTagDescendentsException() {
+			BinarySearchTreeImpl<String> arbol = new BinarySearchTreeImpl<String>();
+			
+			arbol.tagDecendents();
+		}
+		
+		@Test (expected = NoSuchElementException.class)
+		public void testTagHeightException() {
+			BinarySearchTreeImpl<String> arbol = new BinarySearchTreeImpl<String>();
+			
+			arbol.tagHeight();
+		}
+		
+		@Test (expected = NoSuchElementException.class)
+		public void testRemove1HijoDer() {
+			ejemplo.remove(5);
+			Assert.assertEquals("{10, {2, ∅, ∅}, {20, {15, ∅, ∅}, {30, ∅, ∅}}}",ejemplo.toString());
+			
+			ejemplo.remove(10);	
+			Assert.assertEquals("{15, {2, ∅, ∅}, {20, ∅, {30, ∅, ∅}}}",ejemplo.toString());
+			
+			ejemplo.remove(20);
+			Assert.assertEquals("{15, {2, ∅, ∅}, {30, ∅, ∅}}",ejemplo.toString());
+			
+			ejemplo.remove(15,2,30);
+			Assert.assertEquals("∅",ejemplo.toString());
+			
+			ejemplo.insert(52);
+			
+			ejemplo.remove(null,null,52);
+			Assert.assertEquals("∅",ejemplo.toString());
 
-	
+		}
+		
+		@Test (expected = NoSuchElementException.class)
+		public void testRemoveNotContained() {
+			ejemplo.remove(85);
+		}	
+		
+		@Test (expected = IllegalArgumentException.class)
+		public void testInsert() {
+			Assert.assertFalse(ejemplo.insert(10));
+		}
 	}
 
 
